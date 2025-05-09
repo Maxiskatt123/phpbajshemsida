@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sony Music Entertainment</title>
+    <style>
+        :root {
+            --primary: #0072CE;
+            --secondary: #FF0054;
+            --dark: #121212;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--dark);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .hero {
+            height: 600px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/api/placeholder/1200/600") center/cover no-repeat;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #d60046;
+        }
+        
+        .featured {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 36px;
+            color: var(--dark);
+        }
+        
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .artist-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .artist-img {
+            height: 280px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .artist-info {
+            padding: 20px;
+        }
+        
+        .artist-info h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .artist-info p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .releases {
+            background-color: var(--dark);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .releases .section-title {
+            color: white;
+        }
+        
+        .albums-slider {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+        }
+        
+        .album-card {
+            flex: 0 0 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            scroll-snap-align: start;
+        }
+        
+        .album-cover {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .album-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .album-info p {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .events {
+            padding: 80px 0;
+        }
+        
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .event-card {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-date {
+            flex: 0 0 100px;
+            text-align: center;
+            padding: 10px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+        
+        .event-date .day {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .event-info {
+            flex: 1;
+        }
+        
+        .event-info h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .event-info p {
+            color: #555;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            height: 3px;
+            width: 50px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .event-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .event-date {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <?php
+    // Database connection setup
+    $host = "localhost";
+    $username = "sony_admin";
+    $password = "your_secure_password";
+    $database = "sony_music_db";
+    
+    $conn = mysqli_connect($host, $username, $password, $database);
+    
+    // Check connection
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    
+    // Function to fetch featured artists
+    function getFeaturedArtists($conn, $limit = 6) {
+        $sql = "SELECT * FROM artists WHERE featured = 1 ORDER BY artist_name LIMIT $limit";
+        $result = mysqli_query($conn, $sql);
+        
+        $artists = array();
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                $artists[] = $row;
+            }
+        }
+        
+        return $artists;
+    }
+    
+    // Function to fetch latest releases
+    function getLatestReleases($conn, $limit = 10) {
+        $sql = "SELECT albums.*, artists.artist_name FROM albums 
+                JOIN artists ON albums.artist_id = artists.id 
+                ORDER BY release_date DESC LIMIT $limit";
+        $result = mysqli_query($conn, $sql);
+        
+        $albums = array();
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                $albums[] = $row;
+            }
+        }
+        
+        return $albums;
+    }
+    
+    // Function to fetch upcoming events
+    function getUpcomingEvents($conn, $limit = 5) {
+        $today = date('Y-m-d');
+        $sql = "SELECT events.*, artists.artist_name FROM events 
+                JOIN artists ON events.artist_id = artists.id 
+                WHERE event_date >= '$today' 
+                ORDER BY event_date LIMIT $limit";
+        $result = mysqli_query($conn, $sql);
+        
+        $events = array();
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                $events[] = $row;
+            }
+        }
+        
+        return $events;
+    }
+    
+    // Get data for the page
+    $featuredArtists = getFeaturedArtists($conn);
+    $latestReleases = getLatestReleases($conn);
+    $upcomingEvents = getUpcomingEvents($conn);
+    
+    // Get current page
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+    
+    // User authentication simulation
+    $loggedIn = isset($_SESSION['user_id']);
+    $username = $loggedIn ? $_SESSION['username'] : '';
+    ?>
+
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">SONY <span>MUSIC</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="?page=home">Home</a></li>
+                        <li><a href="?page=artists">Artists</a></li>
+                        <li><a href="?page=releases">New Releases</a></li>
+                        <li><a href="?page=events">Events</a></li>
+                        <li><a href="?page=contact">Contact</a></li>
+                        <?php if ($loggedIn): ?>
+                            <li><a href="?page=profile"><?php echo $username; ?></a></li>
+                            <li><a href="?page=logout">Logout</a></li>
+                        <?php else: ?>
+                            <li><a href="?page=login">Login</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <?php if ($page == 'home'): ?>
+    <section class="hero">
+        <h1>Discover the Sound of Tomorrow</h1>
+        <p>Sony Music Entertainment brings you the best artists and music from around the world. Explore our catalog, discover new releases, and stay updated with your favorite artists.</p>
+        <a href="?page=releases" class="btn">Latest Releases</a>
+    </section>
+
+    <section class="featured container">
+        <h2 class="section-title">Featured Artists</h2>
+        <div class="artists-grid">
+            <?php
+            // If database is connected, use the data
+            if (!empty($featuredArtists)) {
+                foreach ($featuredArtists as $artist) {
+                    ?>
+                    <div class="artist-card">
+                        <img src="<?php echo $artist['image_url']; ?>" alt="<?php echo $artist['artist_name']; ?>" class="artist-img">
+                        <div class="artist-info">
+                            <h3><?php echo $artist['artist_name']; ?></h3>
+                            <p><?php echo $artist['genre']; ?></p>
+                            <a href="?page=artist&id=<?php echo $artist['id']; ?>" class="btn">View Profile</a>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                // Fallback static data for preview
+                $demoArtists = [
+                    ['name' => 'Adele', 'genre' => 'Pop/Soul'],
+                    ['name' => 'Beyoncé', 'genre' => 'R&B/Pop'],
+                    ['name' => 'Harry Styles', 'genre' => 'Pop/Rock'],
+                    ['name' => 'The Weeknd', 'genre' => 'R&B/Pop'],
+                    ['name' => 'Doja Cat', 'genre' => 'Hip-Hop/Pop'],
+                    ['name' => 'Travis Scott', 'genre' => 'Hip-Hop/Rap']
+                ];
+                
+                foreach ($demoArtists as $artist) {
+                    ?>
+                    <div class="artist-card">
+                        <img src="/api/placeholder/300/300" alt="<?php echo $artist['name']; ?>" class="artist-img">
+                        <div class="artist-info">
+                            <h3><?php echo $artist['name']; ?></h3>
+                            <p><?php echo $artist['genre']; ?></p>
+                            <a href="#" class="btn">View Profile</a>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+    </section>
+
+    <section class="releases">
+        <div class="container">
+            <h2 class="section-title">Latest Releases</h2>
+            <div class="albums-slider">
+                <?php
+                // If database is connected, use the data
+                if (!empty($latestReleases)) {
+                    foreach ($latestReleases as $album) {
+                        ?>
+                        <div class="album-card">
+                            <img src="<?php echo $album['cover_url']; ?>" alt="<?php echo $album['album_name']; ?>" class="album-cover">
+                            <div class="album-info">
+                                <h3><?php echo $album['album_name']; ?></h3>
+                                <p><?php echo $album['artist_name']; ?></p>
+                                <p><?php echo date('F j, Y', strtotime($album['release_date'])); ?></p>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    // Fallback static data for preview
+                    $demoAlbums = [
+                        ['title' => 'Renaissance', 'artist' => 'Beyoncé', 'date' => 'July 29, 2022'],
+                        ['title' => '30', 'artist' => 'Adele', 'date' => 'November 19, 2021'],
+                        ['title' => 'Harry\'s House', 'artist' => 'Harry Styles', 'date' => 'May 20, 2022'],
+                        ['title' => 'Dawn FM', 'artist' => 'The Weeknd', 'date' => 'January 7, 2022'],
+                        ['title' => 'Planet Her', 'artist' => 'Doja Cat', 'date' => 'June 25, 2021']
+                    ];
+                    
+                    foreach ($demoAlbums as $album) {
+                        ?>
+                        <div class="album-card">
+                            <img src="/api/placeholder/250/250" alt="<?php echo $album['title']; ?>" class="album-cover">
+                            <div class="album-info">
+                                <h3><?php echo $album['title']; ?></h3>
+                                <p><?php echo $album['artist']; ?></p>
+                                <p><?php echo $album['date']; ?></p>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="events container">
+        <h2 class="section-title">Upcoming Events</h2>
+        <div class="event-list">
+            <?php
+            // If database is connected, use the data
+            if (!empty($upcomingEvents)) {
+                foreach ($upcomingEvents as $event) {
+                    $eventDate = strtotime($event['event_date']);
+                    ?>
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="day"><?php echo date('d', $eventDate); ?></div>
+                            <div class="month"><?php echo date('M', $eventDate); ?></div>
+                        </div>
+                        <div class="event-info">
+                            <h3><?php echo $event['event_name']; ?></h3>
+                            <p><strong>Artist:</strong> <?php echo $event['artist_name']; ?></p>
+                            <p><strong>Venue:</strong> <?php echo $event['venue']; ?></p>
+                            <p><strong>Location:</strong> <?php echo $event['location']; ?></p>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                // Fallback static data for preview
+                $demoEvents = [
+                    ['day' => '15', 'month' => 'Jun', 'title' => 'Summer Tour 2025', 'artist' => 'Beyoncé', 'venue' => 'Madison Square Garden', 'location' => 'New York, NY'],
+                    ['day' => '22', 'month' => 'Jun', 'title' => 'Album Release Party', 'artist' => 'Adele', 'venue' => 'The O2 Arena', 'location' => 'London, UK'],
+                    ['day' => '30', 'month' => 'Jun', 'title' => 'World Tour 2025', 'artist' => 'Harry Styles', 'venue' => 'Staples Center', 'location' => 'Los Angeles, CA'],
+                    ['day' => '05', 'month' => 'Jul', 'title' => 'Fan Meet & Greet', 'artist' => 'Doja Cat', 'venue' => 'Sony Music Headquarters', 'location' => 'New York, NY']
+                ];
+                
+                foreach ($demoEvents as $event) {
+                    ?>
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="day"><?php echo $event['day']; ?></div>
+                            <div class="month"><?php echo $event['month']; ?></div>
+                        </div>
+                        <div class="event-info">
+                            <h3><?php echo $event['title']; ?></h3>
+                            <p><strong>Artist:</strong> <?php echo $event['artist']; ?></p>
+                            <p><strong>Venue:</strong> <?php echo $event['venue']; ?></p>
+                            <p><strong>Location:</strong> <?php echo $event['location']; ?></p>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php if ($page == 'login'): ?>
+    <section class="container" style="padding: 80px 0;">
+        <h2 class="section-title">Login to Your Account</h2>
+        <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <form action="process_login.php" method="post">
+                <div style="margin-bottom: 20px;">
+                    <label for="email" style="display: block; margin-bottom: 8px; font-weight: 500;">Email Address</label>
+                    <input type="email" id="email" name="email" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label for="password" style="display: block; margin-bottom: 8px; font-weight: 500;">Password</label>
+                    <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="?page=forgot_password" style="color: var(--primary); text-decoration: none;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">Don't have an account? <a href="?page=register" style="color: var(--primary); text-decoration: none;">Register</a></p>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Sony Music</h3>
+                    <ul>
+                        <li><a href="?page=about">About Us</a></li>
+                        <li><a href="?page=careers">Careers</a></li>
+                        <li><a href="?page=press">Press</a></li>
+                        <li><a href="?page=contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Music</h3>
+                    <ul>
+                        <li><a href="?page=artists">Artists</a></li>
+                        <li><a href="?page=releases">New Releases</a></li>
+                        <li><a href="?page=charts">Charts</a></li>
+                        <li><a href="?page=genres">Genres</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="?page=events">Events</a></li>
+                        <li><a href="?page=news">News</a></li>
+                        <li><a href="?page=blog">Blog</a></li>
+                        <li><a href="?page=forum">Forum</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="?page=terms">Terms of Service</a></li>
+                        <li><a href="?page=privacy">Privacy Policy</a></li>
+                        <li><a href="?page=copyright">Copyright</a></li>
+                        <li><a href="?page=cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; <?php echo date('Y'); ?> Sony Music Entertainment. All rights reserved.</p>
+                <p>
+                    <?php
+                    // Display visitor counter
+                    if (isset($_SESSION['visit_count'])) {
+                        $_SESSION['visit_count']++;
+                    } else {
+                        $_SESSION['visit_count'] = 1;
+                    }
+                    
+                    echo "You've visited this site " . $_SESSION['visit_count'] . " times.";
+                    ?>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for dynamic features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight active navigation link
+            const currentPage = '<?php echo $page; ?>';
+            const navLinks = document.querySelectorAll('nav ul li a');
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href.includes('page=' + currentPage)) {
+                    link.style.color = '#FF0054';
+                }
+            });
+            
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <?php
+    // Close database connection
+    mysqli_close($conn);
+    ?>
+</body>
+</html>
